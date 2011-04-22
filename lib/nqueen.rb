@@ -26,22 +26,16 @@ $LOAD_PATH << "./nqueen"
 
 require "nqueen"
 
-#n = NQueen.new(opts[:n], once=(opts[:once]))
-#n.solve
+n = NQueen.new(opts[:n], once=(opts[:once]))
+n.solve
 
-1.upto(20).each do |i|
-	n = NQueen.new(i)
-	n.solve
-	puts "#{i}... #{n}"
+if opts[:print]
+	puts n
 end
 
-#if opts[:print]
-#	puts n
-#end
-
-#if opts[:verbose]
-#	n.solutions.each do |sol|
-#		n.print_board(sol)
-#		puts
-#	end
-#end
+if opts[:verbose]
+	n.solutions.each do |sol|
+		n.print_board(sol)
+		puts
+	end
+end
