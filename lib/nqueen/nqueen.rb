@@ -14,16 +14,19 @@
 class NQueen
 	attr_reader :solutions, :nstates
 
-	def initialize(n, once=false)
+	def initialize(n, once=false, csp=false)
 		@n = n
 		@solutions = []
 		@nstates = 0
 		@flag = false
 		@once = once
+		@csp = csp
 	end
 
 	def solve
+		@time_start = Time.now
 		place_queen(0, Array.new(@n * @n).collect do false end)
+		@time_end = Time.now
 	end
 
 	def print_board(board)
@@ -37,7 +40,7 @@ class NQueen
 	end
 
 	def to_s
-		"Visited #{@nstates} states and found #{@solutions.count} solution(s)."
+		"Visited #{@nstates} states and found #{@solutions.count} solution(s) on a #{@n}x#{@n} board in #{@time_end  - @time_start}s."
 	end
 
 	private
@@ -45,10 +48,15 @@ class NQueen
 	def place_queen(row, board)
 		return if @once and @flag
 		
-		@nstates += 1
-		
 		0.upto(@n - 1) do |col|
+			# If there's no CSP, count every possible state as visited.
+			@nstates += 1 if not @csp
+
 			if not is_conflict?(row, col, board)
+				# Only count a state here if CSP is activated.
+				# This way only valid entries in the domain
+				# are counted as considered.
+				@nstates += 1 if @csp
 				board[resolve_pos(row, col)] = true
 				
 				# Got a solution, do stuff.

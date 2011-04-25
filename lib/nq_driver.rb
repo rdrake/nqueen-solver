@@ -13,7 +13,7 @@ Usage:
 where [options] are:
 EOS
 
-	opt :n, "Size of board (n x n)", :default => 4
+	opt :n, "Size of board (n x n)" , :default => 4
 	opt :csp, "Use constrait satisfaction", :default => false
 	opt :once, "Only find the first solution", :default => false
 	opt :print, "Print out statistics", :default => true
@@ -26,7 +26,7 @@ $LOAD_PATH << "./nqueen"
 
 require "nqueen"
 
-n = NQueen.new(opts[:n], once=(opts[:once]))
+n = NQueen.new(opts[:n], once=(opts[:once]), csp=(opts[:csp]))
 n.solve
 
 if opts[:print]
